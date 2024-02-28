@@ -50,6 +50,10 @@ export const ArticImgBlock = styled.div`
   background-color: #f0f0f0;
   margin: 0 5px;
 `;
+export const BigImage = styled.img`
+  width: 480px;
+  height: 480px;
+`;
 export const ArticImgBar = styled.div`
   margin-top: 30px;
   width: 490px;
@@ -79,7 +83,7 @@ export const ArticImgBarDiv = styled.div`
 `;
 export const ArticImgBarDivPicture = styled.img`
   width: 100%;
-  height: auto;
+  height: 100%;
   display: block;
   -o-object-fit: cover;
   object-fit: cover;
@@ -169,13 +173,18 @@ export const ArticleAuthor = styled.div`
   -webkit-box-align: start;
   -ms-flex-align: start;
   align-items: flex-start;
+  width: 345px;
+  &:hover{
+    box-shadow: 0px 5px 10px 2px rgba(34, 60, 80, 0.25);
+    border-radius: 60px;
+  }
 `;
 export const AuthorImg = styled.div`
   width: 40px;
   height: 40px;
   background-color: #f0f0f0;
   border-radius: 50%;
-  margin-top: 16px;
+  margin-top: 30px;
 `;
 export const AuthorImgPicture = styled.img`
   width: 100%;
@@ -183,6 +192,7 @@ export const AuthorImgPicture = styled.img`
   display: block;
   -o-object-fit: cover;
   object-fit: cover;
+  border-radius: 30px;
 `;
 export const AuthorContent = styled.div`
   margin-left: 12px;
@@ -400,6 +410,8 @@ export const ModalPublishButton = styled.button`
   height: 46px;
   border-radius: 6px;
   border: 1px solid #D9D9D9;
+  background-color: #009EE4;
+  color: #FFFFFF;
   &:hover {
     background-color: #0080C1;
   }

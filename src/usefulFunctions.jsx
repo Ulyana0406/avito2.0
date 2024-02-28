@@ -22,24 +22,8 @@ function formatMinutes(minutes){
 }
 
 export function priceFormat(price) {
-    let result = "";
-    let priceLengthDevide = Math.ceil(price.toString().length / 3) + 1;
-    while (price > 0) {
-      if (priceLengthDevide > 2) {
-        result +=
-          Math.floor(price / Math.pow(10, priceLengthDevide)).toString() + " ";
-        price -=
-          Math.floor(price / Math.pow(10, priceLengthDevide)) *
-          Math.pow(10, priceLengthDevide);
-        priceLengthDevide--;
-      }
-
-      if (priceLengthDevide <= 2 && price > 0) {
-        result += price.toString();
-        price = 0;
-      } else if (priceLengthDevide <= 2 && price === 0) result += "000";
-    }
-    return result;
+    const transform = new Intl.NumberFormat("ru", {style: "decimal"}).format(price);
+    return transform;
   }
 
   export function dateFormat(released) {
@@ -52,7 +36,7 @@ export function priceFormat(price) {
     let releasedYear = releasedDate.getYear() + 1900;
     let releasedMonth = releasedDate.getMonth() + 1;
     let releasedDay = releasedDate.getDate();
-    let releasedHours = releasedDate.getHours();
+    let releasedHours = releasedDate.getHours() + 3;
     let releasedMinutes = releasedDate.getMinutes();
 
     let currentDate = new Date();
@@ -78,13 +62,13 @@ export function priceFormat(price) {
       releasedHours === currentHours
     ) {
       let Min = ""
-      if (One.indexOf(releasedMinutes) !== -1){
-        Min = " минут назад"
+      if (One.indexOf(currentMinutes - releasedMinutes) !== -1){
+        Min = " минуту назад"
       }
-      else if (Two.indexOf(releasedMinutes) !== -1){
+      else if (Two.indexOf(currentMinutes - releasedMinutes) !== -1){
         Min = " минуты назад"
       }
-      else if (Three.indexOf(releasedMinutes) !== -1){
+      else if (Three.indexOf(currentMinutes - releasedMinutes) !== -1){
         Min = " минут назад"
       }
       return (currentMinutes - releasedMinutes).toString() + Min
@@ -92,9 +76,9 @@ export function priceFormat(price) {
     else if (
       releasedYear === currentYear
     ){
-      if (currentHours - releasedHours === 1) return "1 час назад"
-      else if (currentHours - releasedHours <= 3) return (currentHours - releasedHours).toString() + " часа"
-      else if (currentDay === releasedDate){
+      if (currentHours - releasedHours === 1 && currentDay === releasedDay) return "1 час назад"
+      else if (currentHours - releasedHours <= 3 && currentDay === releasedDay) return (currentHours - releasedHours).toString() + " часа назад"
+      else if (currentDay === releasedDay){
         return `Сегодня в ${releasedHours}:${formatMinutes(releasedMinutes)}`
       }
       else if (currentDay - releasedDay === 1){

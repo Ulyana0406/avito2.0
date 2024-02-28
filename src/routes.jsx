@@ -15,9 +15,9 @@ export const AppRoutes = () => {
             <Route path="/" element={<Main />} />
             <Route path="/register" element={<Authorization />} />
             <Route path="/profile" element={<Profile />} />
-                <Route path="/advertisement/:id" element={<Advertisement />} />
+                <Route path="/advertisement" element={<Advertisement />} />
                 <Route path="/my_ad" element={<MyAdvertisement />} />
-                <Route path="/seller/:id" element={<Seller />} />
+                <Route path="/seller" element={<Seller />} />
             <Route path="*" element={<NotFound />} />
         </Routes>  
     );

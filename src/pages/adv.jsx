@@ -1,16 +1,20 @@
 import React, { useEffect, useState } from "react";
+import Modal from "react-modal";
 import * as S from "./styles/adv-styles";
 import Header from "../components/Header/Header";
 import MainMenu from "../components/MainMenu/MainMenu";
 import { getAd } from "../api/api";
 import { dateFormat, priceFormat, sellsFrom } from "../usefulFunctions";
 import { useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 export const Advertisement = () => {
   const [ad, setAd] = useState(null);
   const [show, setShow] = useState(false);
+  const user = useSelector((state) => state.user.user);
   //const [comments, setComments] = useState([]);
   const navigate = useNavigate();
+  const [modalIsOpenReview, setModalIsOpenReview] = useState(false);
 
   useEffect(() => {
     getAd(JSON.parse(localStorage.getItem("postId"))).then((post) => {
@@ -18,6 +22,40 @@ export const Advertisement = () => {
     });
   }, []);
   //Отзывы
+  const openModalReview = () => {
+    setModalIsOpenReview(true);
+  };
+
+  const closeModalReview = () => {
+    setModalIsOpenReview(false);
+  };
+  const modalContentReviews = (
+    <>
+    <S.ModalHeader>
+      <S.ModalHeaderTitle>Отзывы о товаре</S.ModalHeaderTitle>
+      <S.ModalHeaderClose src="/img/close_modal.png" alt="close" onClick={closeModalReview}/>
+    </S.ModalHeader>
+    <S.ModalAddReviewForm>
+        <S.ModalAddReviewNewArtBlock>
+            <S.ModalAddReviewlabel>Добавить отзыв</S.ModalAddReviewlabel>
+            <S.ModalAddReviewTextear cols="auto" rows="5" placeholder="Введите описание"></S.ModalAddReviewTextear>
+        </S.ModalAddReviewNewArtBlock>
+
+        {user ? 
+        <S.ModalAddReviewButton>Опубликовать</S.ModalAddReviewButton>
+        :
+        <S.ModalAddReviewButtonDisabled disabled={true}>Опубликовать</S.ModalAddReviewButtonDisabled>
+        }
+        
+    </S.ModalAddReviewForm>
+    <S.ModalReviews>
+
+        {/**Review */}
+        
+
+    </S.ModalReviews>
+    </>
+);
   return (
     <S.Container>
       <Header page={"adv"}/>
@@ -82,9 +120,25 @@ export const Advertisement = () => {
                     {ad ? dateFormat(ad.created_on) : null}
                   </S.ArticDate>
                   <S.ArticCity>{ad?.user.city}</S.ArticCity>
-                  <S.ArticLink href="" target="_blank" rel="">
+                  <S.ArticLink href="#" onClick={openModalReview}>
                     23 отзыва
                   </S.ArticLink>
+                  <Modal isOpen={modalIsOpenReview} onRequestClose={closeModalReview} style={
+                      {
+                          content: {
+                            width: "600px",
+                            height: "800px",
+                            inset: "unset"
+                          },
+                          overlay: {
+                            display: "flex",
+                            justifyContent: "center",
+                            alignItems: "center"
+                          }
+                      }
+                    }>
+                      {modalContentReviews}
+                    </Modal>
                 </S.ArticInfo>
                 <S.ArticPrice>
                   {ad ? priceFormat(ad.price) : null} ₽
@@ -101,8 +155,8 @@ export const Advertisement = () => {
                 </S.ArticButton>
                 <S.ArticleAuthor onClick={() => {
                   localStorage.setItem("userId", JSON.stringify(ad.user.id))
-                  navigate(`../seller/${ad.user.id}`);
-                }}>
+                  navigate(`../seller`);
+                  }}>
                   <S.AuthorImg>
                     <S.AuthorImgPicture
                       src={`http://localhost:8090/${ad?.user.avatar}`}

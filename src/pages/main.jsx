@@ -73,6 +73,7 @@ export const Main = () => {
                     city={item.city}
                     released={item.created_on}
                     id={item.id}
+                    userId={item.user_id}
                   />
                 );
               })}

@@ -49,6 +49,9 @@ export const ModalTitleHeader = styled.span`
   color: #000000;
   font-size: 16px;
 `;
+export const WriteTitle = styled.div`
+  color: red;
+`;
 export const ModalTitleInput = styled.input`
   width: 590px;
   height: 50px;
@@ -120,6 +123,12 @@ export const ModalAddPhotos = styled.div`
   justify-content: space-between;
   margin-bottom: 10px;
   overflow: hidden;
+`;
+export const Success = styled.img`
+  width: 90px
+`;
+export const AddPhoto = styled.input`
+  display: none;
 `;
 export const ModalAddForm = styled.div`
   width: 90px;

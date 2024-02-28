@@ -1,4 +1,5 @@
 import { styled } from "styled-components";
+import { Link, NavLink } from "react-router-dom";
 
 export const Container = styled.div`
     width: 100%;
@@ -65,13 +66,25 @@ export const SettingImgPhoto = styled.img`
     border-radius: 50%;
     background-color: #F0F0F0;
 `;
-export const SettingsChangePhoto = styled.a`
+export const AddAvatarBlock = styled.div`
+    width: 100%;
+    position: relative;
+    margin: 15px 0;
+    text-align: center;
+`;
+export const AddAvatarInput = styled.input`
+  opacity: 0;
+  visibility: hidden;
+  position: absolute;
+`
+export const SettingsChangePhoto = styled.label`
     margin-top: 10px;
     margin-bottom: 30px;
     text-decoration: none;
     font-size: 16px;
     line-height: 24px;
     color: #009EE4;
+    width: 135px;
 `;
 export const SettingsRight = styled.div`
     width: 630px;
@@ -175,11 +188,10 @@ export const MainCards = styled.div`
     -ms-grid-columns: (270px)[4];
         grid-template-columns: repeat(4, 270px);
     grid-auto-rows: 441px;
-    grid-gap: 40px 26px;
+    grid-gap: 80px 26px;
     -webkit-box-pack: center;
         -ms-flex-pack: center;
             justify-content: center;
-    overflow-y: auto;
     scrollbar-color: #FFFFFF #2E2E2E;
     scrollbar-width: thin;
     scrollbar-width: 0px;
@@ -244,4 +256,45 @@ export const AdvContentDate = styled.p`
     font-size: 16px;
     line-height: 21px;
     color: #5F5F5F;
+`;
+export const Inputs = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+  width: 100%;
+`;
+export const WriteTitle = styled.div`
+  color: red;
+`;
+export const ModalInput = styled.input`
+  width: 100%;
+  border: none;
+  border-bottom: 1px solid #d0cece;
+  padding: 8px 1px;
+
+  &::placeholder {
+    font-style: normal;
+    font-weight: 400;
+    font-size: 18px;
+    line-height: 24px;
+    color: #d0cece;
+  }
+`;
+export const ModalHeaderClose = styled.img`
+  width: 30px;
+  height: 30px;
+  margin-top: 30px;
+`;
+export const ModalUploadPassword = styled.button`
+  width: 181px;
+  height: 50px;
+  background-color: #009EE4;
+  border: 1px solid #D9D9D9;
+  border-radius: 6px;
+  font-size: 16px;
+  line-height: 24px;
+  color: #FFFFFF;
+  &:hover {
+    background-color: #0080C1;
+  }
 `;
