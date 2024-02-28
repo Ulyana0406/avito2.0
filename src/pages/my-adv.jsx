@@ -16,7 +16,7 @@ import * as S from "./styles/my-adv-styles";
 import Header from "../components/Header/Header";
 import MainMenu from "../components/MainMenu/MainMenu";
 import { useDispatch, useSelector } from "react-redux";
-import { deleteAd, getAd, getAllAds, updateAd } from "../api/api";
+import { deleteAd, getAd, getAllAds, getComments, updateAd } from "../api/api";
 import { useNavigate } from "react-router-dom";
 import { dateFormat, priceFormat, sellsFrom } from "../usefulFunctions";
 import { setAllAds } from "../store/slices/adSlice";
@@ -26,14 +26,14 @@ export const MyAdvertisement = () => {
   const [modalIsOpenReview, setModalIsOpenReview] = useState(false);
   const user = useSelector((state) => state.user.user);
   const token = useSelector((state) => state.user.token);
-  const [ad, setAd] = useState(null);
+  const [ad, setAd] = useState();
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [price, setPrice] = useState();
   const [active, setActive] = useState(0);
+  const [comments, setComments] = useState(null);
 
   const [swiper, setSwiper] = useState(null);
-  console.log(swiper);
 
   //const [photos, setPhotos] = useState([]);
   const dispatch = useDispatch();
@@ -179,25 +179,9 @@ export const MyAdvertisement = () => {
           alt="close"
           onClick={closeModalReview}
         />
+        <div></div>
       </S.ModalHeader>
-      <S.ModalAddReviewForm>
-        <S.ModalAddReviewNewArtBlock>
-          <S.ModalAddReviewlabel>Добавить отзыв</S.ModalAddReviewlabel>
-          <S.ModalAddReviewTextear
-            cols="auto"
-            rows="5"
-            placeholder="Введите описание"
-          ></S.ModalAddReviewTextear>
-        </S.ModalAddReviewNewArtBlock>
 
-        {user ? (
-          <S.ModalAddReviewButton>Опубликовать</S.ModalAddReviewButton>
-        ) : (
-          <S.ModalAddReviewButtonDisabled disabled={true}>
-            Опубликовать
-          </S.ModalAddReviewButtonDisabled>
-        )}
-      </S.ModalAddReviewForm>
       <S.ModalReviews>{/**Review */}</S.ModalReviews>
     </>
   );
@@ -340,8 +324,17 @@ export const MyAdvertisement = () => {
                     {ad ? dateFormat(ad.created_on) : null}
                   </S.ArticDate>
                   <S.ArticCity>{ad?.user.city}</S.ArticCity>
-                  <S.ArticLink href="#" onClick={openModalReview}>
-                    4 отзыва
+                  <S.ArticLink
+                    href="#"
+                    onClick={() => {
+                      openModalReview();
+                      getComments({ id: ad.id, token }).then((response) => {
+                        setComments(response);
+                      });
+                    }}
+                  >
+                    Отзывы
+                    {/* Выводить отзывы */}
                   </S.ArticLink>
                   <Modal
                     isOpen={modalIsOpenReview}

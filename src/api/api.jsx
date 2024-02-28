@@ -140,14 +140,7 @@ export async function updateUserData(
     return newToken;
   }
 }
-export async function getComments() {
-  const response = await fetch(`${baseURL}/comments`);
-  if (!response.ok) {
-    throw new Error("Ошибка сервера");
-  }
-  const data = await response.json();
-  return data;
-}
+
 export async function postAvatar({ avatar, token }) {
   const data = new FormData();
   data.append("file", avatar);
@@ -185,18 +178,20 @@ export async function postAdWithPhoto({
   token,
 }) {
   const photosArray = new FormData();
-  
-  for (let elem of photos){
+
+  for (let elem of photos) {
     photosArray.append("files", elem);
   }
-  const response = await fetch(`${baseURL}/ads?title=${title}&description=${description}&price=${price}`, {
-    method: "POST",
-    headers: {
-      Authorization: `Bearer ${token.access_token}`,
-    },
-    body: photosArray,
-
-  });
+  const response = await fetch(
+    `${baseURL}/ads?title=${title}&description=${description}&price=${price}`,
+    {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${token.access_token}`,
+      },
+      body: photosArray,
+    }
+  );
   if (response.status === 500) {
     throw new Error("Сервер не отвечает");
   }
@@ -276,6 +271,7 @@ export async function deleteAd({ id, token }) {
   const result = await response.json();
   return result;
 }
+
 export async function updateAd({ id, token, title, description, price }) {
   const response = await fetch(`${baseURL}/ads/${id}`, {
     method: "PATCH",
@@ -308,6 +304,7 @@ export async function updateAd({ id, token, title, description, price }) {
   const result = await response.json();
   return result;
 }
+
 export async function updatePassword({ password, repeat, token }) {
   const response = await fetch(`${baseURL}/user/password`, {
     method: "PUT",
@@ -317,7 +314,7 @@ export async function updatePassword({ password, repeat, token }) {
     },
     body: JSON.stringify({
       password_1: password,
-      password_2: repeat
+      password_2: repeat,
     }),
   });
   if (response.status === 500) {
@@ -327,13 +324,78 @@ export async function updatePassword({ password, repeat, token }) {
     const result = await response.json();
     return result;
   }
-  if (response.status === 401){
+  if (response.status === 401) {
     console.log(token.access_token, token.refresh_token);
-    const newToken = await updateToken({access: token.access_token, refresh: token.refresh_token})
+    const newToken = await updateToken({
+      access: token.access_token,
+      refresh: token.refresh_token,
+    });
     console.log(newToken);
     return newToken;
   }
   const result = await response.json();
   return result;
 }
+
 // /ads/me
+
+export async function getComments({ id, token }) {
+  const response = await fetch(`${baseURL}/ads/${id}/comments`, {
+    method: "GET",
+    headers: {
+      Authorization: `Bearer ${token.access_token}`,
+      "content-type": "application/json",
+    },
+  });
+  if (response.status === 500) {
+    throw new Error("Сервер не отвечает");
+  }
+  if (response.status === 200) {
+    const result = await response.json();
+    return result;
+  }
+  if (response.status === 401) {
+    console.log(token.access_token, token.refresh_token);
+    const newToken = await updateToken({
+      access: token.access_token,
+      refresh: token.refresh_token,
+    });
+    console.log(newToken);
+    return newToken;
+  }
+  const result = await response.json();
+  return result;
+}
+
+export async function addComments({ id, text, token }) {
+  const response = await fetch(`${baseURL}/ads/${id}/comments`, {
+    method: "POST",
+    headers: {
+      Authorization: `Bearer ${token.access_token}`,
+      "content-type": "application/json",
+    },
+    body: JSON.stringify({
+      text: text,
+    }),
+  });
+  if (response.status === 500) {
+    throw new Error("Сервер не отвечает");
+  }
+  if (response.status === 200) {
+    const result = await response.json();
+    return result;
+  }
+  if (response.status === 401) {
+    console.log(token.access_token, token.refresh_token);
+    console.log("старый токен");
+    const newToken = await updateToken({
+      access: token.access_token,
+      refresh: token.refresh_token,
+    });
+    console.log(newToken);
+    console.log("новый токен");
+    return newToken;
+  }
+  const result = await response.json();
+  return result;
+}
