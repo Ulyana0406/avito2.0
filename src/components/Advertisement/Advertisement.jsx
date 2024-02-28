@@ -9,19 +9,22 @@ function Advertisement({ images, title, price, city, released, id, userId }) {
   const user = useSelector((state) => state.user.user);
 
   //4. переключение фотографий
-  console.log()
+  console.log();
   return (
-    <S.Item onClick={() => {
-      localStorage.setItem("postId", JSON.stringify(id))
-      if (user?.id === userId){
-        navigate(`/my_ad`)
-      } else {navigate(`/advertisement`)}      
-    }}>
+    <S.Item
+      onClick={() => {
+        localStorage.setItem("postId", JSON.stringify(id));
+        if (user?.id === userId) {
+          navigate(`/my_ad`);
+        } else {
+          navigate(`/advertisement`);
+        }
+      }}
+    >
       <S.Adv>
         <S.AdvImg>
           <S.AdvImgLink href="#">
             <S.AdvPhoto src={`http://localhost:8090/${images[0]?.url}`} />
-            
           </S.AdvImgLink>
         </S.AdvImg>
         <S.AdvContent>

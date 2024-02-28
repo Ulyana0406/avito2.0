@@ -131,11 +131,11 @@ export const ArticPrice = styled.p`
   margin-bottom: 20px;
 `;
 export const ArticleBtnBlock = styled.div`
-    display: -webkit-box;
-    display: -ms-flexbox;
-    display: flex;
-    -ms-flex-wrap: wrap;
-        flex-wrap: wrap;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-wrap: wrap;
+  flex-wrap: wrap;
 `;
 const ArticleBtns = `
     background-color: #009EE4;
@@ -152,15 +152,17 @@ const ArticleBtns = `
     }
 `;
 export const BtnEdit = styled.button`
-    ${ArticleBtns}
-    width: 189px;
-    margin-right: 10px;
+  ${ArticleBtns}
+  width: 189px;
+  margin-right: 10px;
 `;
 export const BtnRemove = styled.button`
-    ${ArticleBtns}
-    width: 225px;
+  ${ArticleBtns}
+  width: 225px;
 `;
 export const ArticleAuthor = styled.div`
+  display: flex;
+  align-items: center;
   margin-top: 34px;
   margin-bottom: 20px;
   display: -webkit-box;
@@ -172,9 +174,8 @@ export const ArticleAuthor = styled.div`
   flex-direction: row;
   -webkit-box-align: start;
   -ms-flex-align: start;
-  align-items: flex-start;
-  width: 345px;
-  &:hover{
+  max-width: 345px;
+  &:hover {
     box-shadow: 0px 5px 10px 2px rgba(34, 60, 80, 0.25);
     border-radius: 60px;
   }
@@ -184,9 +185,9 @@ export const AuthorImg = styled.div`
   height: 40px;
   background-color: #f0f0f0;
   border-radius: 50%;
-  margin-top: 30px;
 `;
 export const AuthorImgPicture = styled.img`
+  position: absolute;
   width: 100%;
   height: auto;
   display: block;
@@ -198,6 +199,7 @@ export const AuthorContent = styled.div`
   margin-left: 12px;
 `;
 export const AuthorName = styled.p`
+  margin: 0;
   font-size: 20px;
   line-height: 26px;
   font-weight: 600;
@@ -214,6 +216,7 @@ export const MainContainerBlock = styled.div`
   padding: 0px 5px;
 `;
 export const MainTitle = styled.h3`
+  margin-top: 114px;
   margin-bottom: 32px;
   padding: 0 5px;
   font-size: 32px;
@@ -409,11 +412,11 @@ export const ModalPublishButton = styled.button`
   width: 181px;
   height: 46px;
   border-radius: 6px;
-  border: 1px solid #D9D9D9;
-  background-color: #009EE4;
-  color: #FFFFFF;
+  border: 1px solid #d9d9d9;
+  background-color: #009ee4;
+  color: #ffffff;
   &:hover {
-    background-color: #0080C1;
+    background-color: #0080c1;
   }
 `;
 export const ModalAddReviewForm = styled.form`
@@ -424,8 +427,8 @@ export const ModalAddReviewForm = styled.form`
   display: flex;
   -webkit-box-orient: vertical;
   -webkit-box-direction: normal;
-      -ms-flex-direction: column;
-          flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
   width: 100%;
 `;
 export const ModalAddReviewNewArtBlock = styled.div`
@@ -435,8 +438,8 @@ export const ModalAddReviewNewArtBlock = styled.div`
   display: flex;
   -webkit-box-orient: vertical;
   -webkit-box-direction: normal;
-      -ms-flex-direction: column;
-          flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
   margin-bottom: 14px;
 `;
 export const ModalAddReviewlabel = styled.label`
@@ -447,9 +450,9 @@ export const ModalAddReviewlabel = styled.label`
   color: #000000;
 `;
 export const ModalAddReviewTextear = styled.textarea`
-  font-family: 'Roboto', sans-serif;
+  font-family: "Roboto", sans-serif;
   padding: 10px 19px;
-  background: #FFFFFF;
+  background: #ffffff;
   border: 1px solid rgba(0, 0, 0, 0.2);
   border-radius: 6px;
   font-size: 16px;
@@ -461,25 +464,25 @@ export const ModalAddReviewTextear = styled.textarea`
 export const ModalAddReviewButton = styled.button`
   width: 181px;
   height: 50px;
-  background-color: #009EE4;
-  border: 1px solid #D9D9D9;
+  background-color: #009ee4;
+  border: 1px solid #d9d9d9;
   border-radius: 6px;
   font-size: 16px;
   line-height: 24px;
-  color: #FFFFFF;
+  color: #ffffff;
   &:hover {
-    background-color: #0080C1;
+    background-color: #0080c1;
   }
 `;
 export const ModalAddReviewButtonDisabled = styled.button`
   width: 181px;
   height: 50px;
-  background: #D9D9D9;
-  border: 1px solid #D9D9D9;
+  background: #d9d9d9;
+  border: 1px solid #d9d9d9;
   border-radius: 6px;
   font-size: 16px;
   line-height: 24px;
-  color: #FFFFFF;
+  color: #ffffff;
 `;
 export const ModalReviews = styled.div`
   width: 550px;
