@@ -176,7 +176,6 @@ export const ArticleAuthor = styled.div`
   -ms-flex-align: start;
   max-width: 345px;
   &:hover {
-    box-shadow: 0px 5px 10px 2px rgba(34, 60, 80, 0.25);
     border-radius: 60px;
   }
 `;
