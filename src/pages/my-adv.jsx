@@ -31,8 +31,8 @@ export const MyAdvertisement = () => {
   const [description, setDescription] = useState("");
   const [price, setPrice] = useState();
   const [active, setActive] = useState(0);
-  const [comments, setComments] = useState(null);
-
+  const [comments, setComments] = useState([]);
+  console.log(comments);
   const [swiper, setSwiper] = useState(null);
 
   //const [photos, setPhotos] = useState([]);
@@ -179,10 +179,16 @@ export const MyAdvertisement = () => {
           alt="close"
           onClick={closeModalReview}
         />
-        <div></div>
       </S.ModalHeader>
 
-      <S.ModalReviews>{/**Review */}</S.ModalReviews>
+      <S.ModalReviews>
+        {comments.map((comment) => (
+          <div key={comment.id}>
+            <div>{comment.author.email}</div>
+            <div>{comment.text}</div>
+          </div>
+        ))}
+      </S.ModalReviews>
     </>
   );
 

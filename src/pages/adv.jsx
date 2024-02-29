@@ -24,11 +24,10 @@ export const Advertisement = () => {
   const [modalIsOpenReview, setModalIsOpenReview] = useState(false);
   const [description, setDescription] = useState("");
   const dispatch = useDispatch();
-  const [comments, setComments] = useState(null);
+  const [comments, setComments] = useState([]);
 
   const [active, setActive] = useState(0);
   const [swiper, setSwiper] = useState(null);
-
   useEffect(() => {
     getAd(JSON.parse(localStorage.getItem("postId"))).then((post) => {
       setAd(post);
@@ -53,6 +52,7 @@ export const Advertisement = () => {
           onClick={closeModalReview}
         />
       </S.ModalHeader>
+
       <S.ModalAddReviewForm>
         <S.ModalAddReviewNewArtBlock>
           <S.ModalAddReviewlabel>Добавить отзыв</S.ModalAddReviewlabel>
@@ -73,21 +73,29 @@ export const Advertisement = () => {
               event.preventDefault();
               //
               addComments({ id: ad.id, text: description, token: token }).then(
-                (response) => {
-                  console.log(response);
-                  dispatch(setToken(response));
-                  addComments({
-                    id: ad.id,
-                    text: description,
-                    token: token,
-                  }).then((secondResponse) => {
-                    console.log("Второй респонз");
-                  });
+                (item) => {
+                  if (item?.text !== description) {
+                    dispatch(setToken(item));
+                    addComments({
+                      id: ad.id,
+                      text: description,
+                      token: item,
+                    }).then(() => {
+                      getComments({ id: ad.id, token: token }).then(
+                        (response) => {
+                          setComments(response);
+                        }
+                      );
+                    });
+                  } else {
+                    getComments({ id: ad.id, token: token }).then(
+                      (response) => {
+                        setComments(response);
+                      }
+                    );
+                  }
                 }
               );
-              getComments({ id: ad.id, token: token }).then((response) => {
-                setComments(response);
-              });
             }}
           >
             Опубликовать
@@ -98,7 +106,14 @@ export const Advertisement = () => {
           </S.ModalAddReviewButtonDisabled>
         )}
       </S.ModalAddReviewForm>
-      <S.ModalReviews>{/**Review */}</S.ModalReviews>
+      <S.ModalReviews>
+        {comments.map((comment) => (
+          <div key={comment.id}>
+            <div>{comment.author.email}</div>
+            <div>{comment.text}</div>
+          </div>
+        ))}
+      </S.ModalReviews>
     </>
   );
   return (
