@@ -13,7 +13,6 @@ export const Adv = styled.div`
   -webkit-box-direction: normal;
   -ms-flex-direction: column;
   flex-direction: column;
-  box-shadow: 0px 5px 10px 2px rgba(34, 60, 80, 0.25);
   transition: 0.4s;
   &:hover {
     transform: scale(1.01);

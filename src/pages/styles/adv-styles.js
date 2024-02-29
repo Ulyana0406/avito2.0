@@ -123,6 +123,7 @@ export const ArticLink = styled.a`
   font-size: 16px;
   line-height: 21px;
   color: #009ee4;
+  margin-top: 20px;
 `;
 export const ArticPrice = styled.p`
   font-size: 28px;
@@ -141,6 +142,7 @@ export const ArticButton = styled.button`
   line-height: 22px;
   color: #ffffff;
   font-family: "Roboto", sans-serif;
+  transition: 0.4s;
   &:hover {
     background-color: #0080c1;
   }
@@ -164,10 +166,6 @@ export const ArticleAuthor = styled.div`
   -ms-flex-align: start;
   align-items: flex-start;
   width: 345px;
-  &:hover{
-    box-shadow: 0px 5px 10px 2px rgba(34, 60, 80, 0.25);
-    border-radius: 60px;
-  }
 `;
 export const AuthorImg = styled.div`
   width: 40px;
@@ -236,8 +234,8 @@ export const ModalAddReviewForm = styled.form`
   display: flex;
   -webkit-box-orient: vertical;
   -webkit-box-direction: normal;
-      -ms-flex-direction: column;
-          flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
   width: 100%;
 `;
 export const ModalAddReviewNewArtBlock = styled.div`
@@ -247,8 +245,8 @@ export const ModalAddReviewNewArtBlock = styled.div`
   display: flex;
   -webkit-box-orient: vertical;
   -webkit-box-direction: normal;
-      -ms-flex-direction: column;
-          flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
   margin-bottom: 14px;
 `;
 export const ModalAddReviewlabel = styled.label`
@@ -259,9 +257,9 @@ export const ModalAddReviewlabel = styled.label`
   color: #000000;
 `;
 export const ModalAddReviewTextear = styled.textarea`
-  font-family: 'Roboto', sans-serif;
+  font-family: "Roboto", sans-serif;
   padding: 10px 19px;
-  background: #FFFFFF;
+  background: #ffffff;
   border: 1px solid rgba(0, 0, 0, 0.2);
   border-radius: 6px;
   font-size: 16px;
@@ -273,25 +271,25 @@ export const ModalAddReviewTextear = styled.textarea`
 export const ModalAddReviewButton = styled.button`
   width: 181px;
   height: 50px;
-  background-color: #009EE4;
-  border: 1px solid #D9D9D9;
+  background-color: #009ee4;
+  border: 1px solid #d9d9d9;
   border-radius: 6px;
   font-size: 16px;
   line-height: 24px;
-  color: #FFFFFF;
+  color: #ffffff;
   &:hover {
-    background-color: #0080C1;
+    background-color: #0080c1;
   }
 `;
 export const ModalAddReviewButtonDisabled = styled.button`
   width: 181px;
   height: 50px;
-  background: #D9D9D9;
-  border: 1px solid #D9D9D9;
+  background: #d9d9d9;
+  border: 1px solid #d9d9d9;
   border-radius: 6px;
   font-size: 16px;
   line-height: 24px;
-  color: #FFFFFF;
+  color: #ffffff;
 `;
 export const ModalReviews = styled.div`
   width: 550px;
