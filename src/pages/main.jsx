@@ -19,7 +19,7 @@ export const Main = () => {
         function compare(a, b) {
           var dateA = new Date(a.created_on);
           var dateB = new Date(b.created_on);
-         
+
           return dateB - dateA;
         }
         ads.sort(compare);
@@ -32,7 +32,7 @@ export const Main = () => {
     e.preventDefault();
     dispatch(setFilteredAds(search));
   }
-
+  // наконец-то все готово
   return (
     <S.Container>
       <S.Header>
