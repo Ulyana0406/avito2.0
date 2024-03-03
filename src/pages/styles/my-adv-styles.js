@@ -180,6 +180,8 @@ export const ArticleAuthor = styled.div`
   }
 `;
 export const AuthorImg = styled.div`
+  max-width: 40px;
+  max-height: 40px;
   width: 40px;
   height: 40px;
   background-color: #f0f0f0;
@@ -187,6 +189,8 @@ export const AuthorImg = styled.div`
 `;
 export const AuthorImgPicture = styled.img`
   position: absolute;
+  max-width: 40px;
+  max-height: 40px;
   width: 100%;
   height: auto;
   display: block;

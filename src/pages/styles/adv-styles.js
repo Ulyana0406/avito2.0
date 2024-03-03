@@ -168,6 +168,8 @@ export const ArticleAuthor = styled.div`
   width: 345px;
 `;
 export const AuthorImg = styled.div`
+  max-width: 40px;
+  max-height: 40px;
   width: 40px;
   height: 40px;
   background-color: #f0f0f0;
@@ -175,6 +177,8 @@ export const AuthorImg = styled.div`
   margin-top: 30px;
 `;
 export const AuthorImgPicture = styled.img`
+  max-width: 40px;
+  max-height: 40px;
   width: 100%;
   height: auto;
   display: block;
