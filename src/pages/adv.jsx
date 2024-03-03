@@ -166,7 +166,7 @@ export const Advertisement = () => {
                     {ad?.images.length > 3 ? (
                       <SwiperSlide>
                         <S.BigImage
-                          src={`http://localhost:8090/${ad?.images[2]?.url}`}
+                          src={`http://localhost:8090/${ad?.images[3]?.url}`}
                           alt=""
                         />
                       </SwiperSlide>
@@ -174,7 +174,7 @@ export const Advertisement = () => {
                     {ad?.images.length > 4 ? (
                       <SwiperSlide>
                         <S.BigImage
-                          src={`http://localhost:8090/${ad?.images[2]?.url}`}
+                          src={`http://localhost:8090/${ad?.images[4]?.url}`}
                           alt=""
                         />
                       </SwiperSlide>
@@ -226,6 +226,7 @@ export const Advertisement = () => {
                       {ad?.images.length > 3 ? (
                         <S.ArticImgBarDiv
                           onClick={() => {
+                            swiper.slideTo(3);
                             setActive(3);
                           }}
                         >
@@ -237,6 +238,7 @@ export const Advertisement = () => {
                       {ad?.images.length > 4 ? (
                         <S.ArticImgBarDiv
                           onClick={() => {
+                            swiper.slideTo(4);
                             setActive(4);
                           }}
                         >

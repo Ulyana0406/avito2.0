@@ -29,17 +29,15 @@ export const MyAdvertisement = () => {
   const [ad, setAd] = useState();
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
-  const [price, setPrice] = useState();
+  const [price, setPrice] = useState(0);
   const [active, setActive] = useState(0);
   const [comments, setComments] = useState([]);
-  console.log(comments);
   const [swiper, setSwiper] = useState(null);
-
   //const [photos, setPhotos] = useState([]);
   const dispatch = useDispatch();
   //const [comments, setComments] = useState([]);
   const navigate = useNavigate();
-
+  console.log(ad);
   useEffect(() => {
     getAd(JSON.parse(localStorage.getItem("postId"))).then((post) => {
       setAd(post);
@@ -102,23 +100,78 @@ export const MyAdvertisement = () => {
         </S.ModalFormNewArtP>
         <S.ModalAddPhotosBar>
           <S.ModalAddPhotos>
-            <img src="/img/add_photo.png" alt="add_photo" />
+            {ad?.images[0] !== undefined ? (
+              <img
+                src={`http://localhost:8090/${ad.images[0].url}`}
+                style={{
+                  width: "90px",
+                  height: "90px",
+                }}
+              />
+            ) : (
+              <img src="/img/add_photo.png" alt="add_photo" />
+            )}
+
             <S.ModalAddPhotoCover></S.ModalAddPhotoCover>
           </S.ModalAddPhotos>
           <S.ModalAddPhotos>
-            <img src="/img/add_photo.png" alt="add_photo" />
+            {ad?.images[1] !== undefined ? (
+              <img
+                src={`http://localhost:8090/${ad.images[1].url}`}
+                style={{
+                  width: "90px",
+                  height: "90px",
+                }}
+              />
+            ) : (
+              <img src="/img/add_photo.png" alt="add_photo" />
+            )}
+
             <S.ModalAddPhotoCover></S.ModalAddPhotoCover>
           </S.ModalAddPhotos>
           <S.ModalAddPhotos>
-            <img src="/img/add_photo.png" alt="add_photo" />
+            {ad?.images[2] !== undefined ? (
+              <img
+                src={`http://localhost:8090/${ad.images[2].url}`}
+                style={{
+                  width: "90px",
+                  height: "90px",
+                }}
+              />
+            ) : (
+              <img src="/img/add_photo.png" alt="add_photo" />
+            )}
+
             <S.ModalAddPhotoCover></S.ModalAddPhotoCover>
           </S.ModalAddPhotos>
           <S.ModalAddPhotos>
-            <img src="/img/add_photo.png" alt="add_photo" />
+            {ad?.images[3] !== undefined ? (
+              <img
+                src={`http://localhost:8090/${ad.images[3].url}`}
+                style={{
+                  width: "90px",
+                  height: "90px",
+                }}
+              />
+            ) : (
+              <img src="/img/add_photo.png" alt="add_photo" />
+            )}
+
             <S.ModalAddPhotoCover></S.ModalAddPhotoCover>
           </S.ModalAddPhotos>
           <S.ModalAddPhotos>
-            <img src="/img/add_photo.png" alt="add_photo" />
+            {ad?.images[4] !== undefined ? (
+              <img
+                src={`http://localhost:8090/${ad.images[4].url}`}
+                style={{
+                  width: "90px",
+                  height: "90px",
+                }}
+              />
+            ) : (
+              <img src="/img/add_photo.png" alt="add_photo" />
+            )}
+
             <S.ModalAddPhotoCover></S.ModalAddPhotoCover>
           </S.ModalAddPhotos>
         </S.ModalAddPhotosBar>
@@ -126,10 +179,12 @@ export const MyAdvertisement = () => {
       <S.ModalBlockPrice>
         <label for="price">Цена</label>
         <S.ModalInputPrice
-          onChange={(event) => {
-            setPrice(event.target.value);
-          }}
           value={price}
+          onChange={(event) => {
+            if (event.target.value > -1) {
+              setPrice(event.target.value);
+            }
+          }}
         />
         <S.ModalInputPriceCover></S.ModalInputPriceCover>
       </S.ModalBlockPrice>
@@ -238,7 +293,7 @@ export const MyAdvertisement = () => {
                     {ad?.images.length > 3 ? (
                       <SwiperSlide>
                         <S.BigImage
-                          src={`http://localhost:8090/${ad?.images[2]?.url}`}
+                          src={`http://localhost:8090/${ad?.images[3]?.url}`}
                           alt=""
                         />
                       </SwiperSlide>
@@ -246,7 +301,7 @@ export const MyAdvertisement = () => {
                     {ad?.images.length > 4 ? (
                       <SwiperSlide>
                         <S.BigImage
-                          src={`http://localhost:8090/${ad?.images[2]?.url}`}
+                          src={`http://localhost:8090/${ad?.images[4]?.url}`}
                           alt=""
                         />
                       </SwiperSlide>
@@ -298,6 +353,7 @@ export const MyAdvertisement = () => {
                       {ad?.images.length > 3 ? (
                         <S.ArticImgBarDiv
                           onClick={() => {
+                            swiper.slideTo(3);
                             setActive(3);
                           }}
                         >
@@ -309,6 +365,7 @@ export const MyAdvertisement = () => {
                       {ad?.images.length > 4 ? (
                         <S.ArticImgBarDiv
                           onClick={() => {
+                            swiper.slideTo(4);
                             setActive(4);
                           }}
                         >
