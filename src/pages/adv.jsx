@@ -109,7 +109,11 @@ export const Advertisement = () => {
       <S.ModalReviews>
         {comments.map((comment) => (
           <div key={comment.id}>
-            <div>{comment.author.email}</div>
+            {comment.author.name !== "" ? (
+              <div>{comment.author.name}</div>
+            ) : (
+              <div>{comment.author.email}</div>
+            )}
             <div>{comment.text}</div>
           </div>
         ))}
