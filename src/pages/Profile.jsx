@@ -5,7 +5,12 @@ import Header from "../components/Header/Header";
 import MainMenu from "../components/MainMenu/MainMenu";
 import Advertisement from "../components/Advertisement/Advertisement";
 import { useDispatch, useSelector } from "react-redux";
-import { getAllAds, postAvatar, updatePassword, updateUserData } from "../api/api";
+import {
+  getAllAds,
+  postAvatar,
+  updatePassword,
+  updateUserData,
+} from "../api/api";
 import { setAllAds } from "../store/slices/adSlice";
 import { setToken, setUser } from "../store/slices/userSlice";
 
@@ -53,9 +58,9 @@ export const Profile = () => {
   function onChangeInput(e) {
     setDataProfile({ ...dataProfile, [e.name]: e.value });
   }
-  function openChangePassword(event){
+  function openChangePassword(event) {
     event.preventDefault();
-    openModal()
+    openModal();
   }
   function updateData(event) {
     event.preventDefault();
@@ -96,60 +101,77 @@ export const Profile = () => {
     if (event.target.files[0]) {
       //отправить фото на сервер
       console.log(event.target.files[0]);
-      postAvatar({avatar: event.target.files[0], token: token}).then((item) => {
-        console.log(item);
-        if (item?.id !== JSON.parse(localStorage.getItem("authData")).id){
-          console.log("recall works");
-          dispatch(setToken(item))
-          postAvatar({avatar: event.target.files[0], token: item}).then((newItem) => {
-            dispatch(setUser(newItem))
-          })
+      postAvatar({ avatar: event.target.files[0], token: token }).then(
+        (item) => {
+          console.log(item);
+          if (item?.id !== JSON.parse(localStorage.getItem("authData")).id) {
+            console.log("recall works");
+            dispatch(setToken(item));
+            postAvatar({ avatar: event.target.files[0], token: item }).then(
+              (newItem) => {
+                dispatch(setUser(newItem));
+              }
+            );
+          } else {
+            localStorage.setItem("authData", JSON.stringify(item));
+            dispatch(setUser(item));
+          }
         }
-        else {
-          localStorage.setItem("authData", JSON.stringify(item))
-          dispatch(setUser(item))
-        }
-      })
+      );
     }
   };
 
   const changePassword = (
-
-      <S.Inputs>
-        <S.ModalHeaderClose src="/img/close_modal.png" alt="close" onClick={closeModal} />
-        <S.ModalInput
-          type="password"
-          name="password"
-          placeholder="Текущий пароль"
-          value={currentPassword}
-          onChange={(event) => {
-            setCurrentPassword(event.target.value)
-          }}
-        />
-        <S.ModalInput
-          type="password"
-          name="password"
-          placeholder="Новый пароль"
-          value={newPassword}
-          onChange={(event) => {
-            setNewPassword(event.target.value)
-          }}
-        />
-        <S.ModalUploadPassword onClick={() => {
-          updatePassword({password: currentPassword, repeat: newPassword, token: token}).then((item) => {
-            if (item?.access_token){
+    <S.Inputs>
+      <S.ModalHeaderClose
+        src="/img/close_modal.png"
+        alt="close"
+        onClick={closeModal}
+      />
+      <S.ModalInput
+        type="password"
+        name="password"
+        placeholder="Текущий пароль"
+        value={currentPassword}
+        onChange={(event) => {
+          setCurrentPassword(event.target.value);
+        }}
+      />
+      <S.ModalInput
+        type="password"
+        name="password"
+        placeholder="Новый пароль"
+        value={newPassword}
+        onChange={(event) => {
+          setNewPassword(event.target.value);
+        }}
+      />
+      <S.ModalUploadPassword
+        onClick={() => {
+          updatePassword({
+            password: currentPassword,
+            repeat: newPassword,
+            token: token,
+          }).then((item) => {
+            if (item?.access_token) {
               setToken(item);
-              updatePassword({password: currentPassword, repeat: newPassword, token: item}).then((item) => {
+              updatePassword({
+                password: currentPassword,
+                repeat: newPassword,
+                token: item,
+              }).then((item) => {
                 console.log(item, "from update token");
-              })
+              });
             }
             console.log(item);
             console.log("changed");
             closeModal();
-          })
-        }}>Сохранить</S.ModalUploadPassword>
-        </S.Inputs>
-
+          });
+        }}
+      >
+        Сохранить
+      </S.ModalUploadPassword>
+    </S.Inputs>
   );
 
   return (
@@ -176,18 +198,26 @@ export const Profile = () => {
                     </S.SettingImgLink>
                   </S.SettingsImg>
                   {user?.avatar ? (
-
                     //заменить
                     <S.AddAvatarBlock>
-                      <S.AddAvatarInput type="file" onChange={UploadAvatar} id="input__file" multiple/>
-                      <S.SettingsChangePhoto for="input__file">Заменить</S.SettingsChangePhoto>
+                      <S.AddAvatarInput
+                        type="file"
+                        onChange={UploadAvatar}
+                        id="input__file"
+                        multiple
+                      />
+                      <S.SettingsChangePhoto for="input__file">
+                        Заменить
+                      </S.SettingsChangePhoto>
                     </S.AddAvatarBlock>
-
                   ) : (
-
                     //добавить
                     <S.AddAvatarBlock>
-                      <S.AddAvatarInput type="file" onChange={UploadAvatar} multiple/>
+                      <S.AddAvatarInput
+                        type="file"
+                        onChange={UploadAvatar}
+                        multiple
+                      />
                       <S.SettingsChangePhoto>Добавить</S.SettingsChangePhoto>
                     </S.AddAvatarBlock>
                   )}
@@ -241,21 +271,23 @@ export const Profile = () => {
                     <S.SettingsBtn onClick={openChangePassword}>
                       Сменить пароль
                     </S.SettingsBtn>
-                    <Modal isOpen={modalIsOpen} onRequestClose={closeModal} style={
-                        {
-                            content: {
-                                width: "300px",
-                                height: "300px",
-                                inset: "unset"
-                            },
-                            overlay: {
-                                display: "flex",
-                                justifyContent: "center",
-                                alignItems: "center"
-                            }
-                        }
-                        }>
-                          {changePassword}
+                    <Modal
+                      isOpen={modalIsOpen}
+                      onRequestClose={closeModal}
+                      style={{
+                        content: {
+                          width: "300px",
+                          height: "300px",
+                          inset: "unset",
+                        },
+                        overlay: {
+                          display: "flex",
+                          justifyContent: "center",
+                          alignItems: "center",
+                        },
+                      }}
+                    >
+                      {changePassword}
                     </Modal>
                   </S.SettingsForm>
                 </S.SettingsRight>

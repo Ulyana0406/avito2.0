@@ -16,7 +16,7 @@ function Header({ page }) {
   const dispatch = useDispatch();
   const user = useSelector((state) => state.user.user);
   const token = useSelector((state) => state.user.token);
-
+  console.log(localStorage);
   const openModal = () => {
     setModalIsOpen(true);
   };
@@ -342,9 +342,8 @@ function Header({ page }) {
             {page === "profile" ? (
               <S.HeaderBtnMainEnter
                 onClick={() => {
-                  localStorage.removeItem("authData");
+                  localStorage.clear();
                   dispatch(setUser(null));
-                  localStorage.removeItem("token");
                   dispatch(setToken(null));
                   window.location.href = "/register";
                 }}

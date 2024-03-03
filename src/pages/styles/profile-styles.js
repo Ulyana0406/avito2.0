@@ -74,7 +74,6 @@ export const AddAvatarBlock = styled.div`
 `;
 export const AddAvatarInput = styled.input`
   opacity: 0;
-  visibility: hidden;
   position: absolute;
 `;
 export const SettingsChangePhoto = styled.label`
