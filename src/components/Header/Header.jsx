@@ -10,7 +10,7 @@ function Header({ page }) {
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
-  const [price, setPrice] = useState();
+  const [price, setPrice] = useState(0);
   const [photos, setPhotos] = useState([]);
   const [writeTitle, setWriteTitle] = useState(false);
   const dispatch = useDispatch();
@@ -191,8 +191,11 @@ function Header({ page }) {
       <S.ModalBlockPrice>
         <label for="price">Цена</label>
         <S.ModalInputPrice
+          value={price}
           onChange={(event) => {
-            setPrice(Number(event.target.value));
+            if (event.target.value > -1) {
+              setPrice(Number(event.target.value));
+            }
           }}
         />
       </S.ModalBlockPrice>
