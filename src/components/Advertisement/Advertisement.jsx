@@ -9,14 +9,15 @@ function Advertisement({ images, title, price, city, released, id, userId }) {
   const user = useSelector((state) => state.user.user);
 
   //4. переключение фотографий
-  console.log();
   return (
     <S.Item
       onClick={() => {
         localStorage.setItem("postId", JSON.stringify(id));
-        if (user?.id === userId) {
+        console.log("хуй");
+        if (user?.id === userId && user?.id !== undefined) {
           navigate(`/my_ad`);
         } else {
+          console.log("правильный хуй");
           navigate(`/advertisement`);
         }
       }}
