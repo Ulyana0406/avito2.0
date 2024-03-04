@@ -64,7 +64,6 @@ export const Profile = () => {
   }
   function updateData(event) {
     event.preventDefault();
-    console.log(dataProfile);
     updateUserData(
       dataProfile.email,
       dataProfile.name,
@@ -74,9 +73,7 @@ export const Profile = () => {
       token,
       user
     ).then((item) => {
-      console.log(item);
       if (item?.id !== JSON.parse(localStorage.getItem("authData")).id) {
-        console.log("recall works");
         dispatch(setToken(item));
         updateUserData(
           dataProfile.email,
@@ -97,15 +94,11 @@ export const Profile = () => {
   }
   const UploadAvatar = (event) => {
     event.preventDefault();
-    console.log(event);
     if (event.target.files[0]) {
       //отправить фото на сервер
-      console.log(event.target.files[0]);
       postAvatar({ avatar: event.target.files[0], token: token }).then(
         (item) => {
-          console.log(item);
           if (item?.id !== JSON.parse(localStorage.getItem("authData")).id) {
-            console.log("recall works");
             dispatch(setToken(item));
             postAvatar({ avatar: event.target.files[0], token: item }).then(
               (newItem) => {
@@ -163,8 +156,6 @@ export const Profile = () => {
                 console.log(item, "from update token");
               });
             }
-            console.log(item);
-            console.log("changed");
             closeModal();
           });
         }}

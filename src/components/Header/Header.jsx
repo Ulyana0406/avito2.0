@@ -16,7 +16,7 @@ function Header({ page }) {
   const dispatch = useDispatch();
   const user = useSelector((state) => state.user.user);
   const token = useSelector((state) => state.user.token);
-  console.log(localStorage);
+
   const openModal = () => {
     setModalIsOpen(true);
   };
@@ -77,7 +77,6 @@ function Header({ page }) {
               id="add_photo1"
               accept="image/*"
               onChange={(event) => {
-                console.log(event);
                 setPhotos([
                   ...photos.slice(0, 0),
                   event.target.files[0],
@@ -102,7 +101,6 @@ function Header({ page }) {
               id="add_photo2"
               accept="image/*"
               onChange={(event) => {
-                console.log(event);
                 setPhotos([
                   ...photos.slice(0, 1),
                   event.target.files[0],
@@ -127,7 +125,6 @@ function Header({ page }) {
               id="add_photo3"
               accept="image/*"
               onChange={(event) => {
-                console.log(event);
                 setPhotos([
                   ...photos.slice(0, 2),
                   event.target.files[0],
@@ -152,7 +149,6 @@ function Header({ page }) {
               id="add_photo4"
               accept="image/*"
               onChange={(event) => {
-                console.log(event);
                 setPhotos([
                   ...photos.slice(0, 3),
                   event.target.files[0],
@@ -177,7 +173,6 @@ function Header({ page }) {
               id="add_photo5"
               accept="image/*"
               onChange={(event) => {
-                console.log(event);
                 setPhotos([
                   ...photos.slice(0, 4),
                   event.target.files[0],
@@ -214,18 +209,15 @@ function Header({ page }) {
                 price: price,
                 token: token,
               }).then((item) => {
-                console.log(title, description, price, token);
                 if (item?.title !== title) {
-                  console.log("recall works");
                   dispatch(setToken(item));
-                  console.log(item);
+
                   postAd({
                     title: title,
                     description: description,
                     price: price,
                     token: item,
                   }).then(() => {
-                    console.log("postAd again");
                     getAllAds().then((ads) => {
                       function compare(a, b) {
                         var dateA = new Date(a.created_on);
@@ -238,9 +230,7 @@ function Header({ page }) {
                     });
                   });
                 } else {
-                  console.log("works normally");
                   getAllAds().then((ads) => {
-                    console.log("got ads");
                     function compare(a, b) {
                       var dateA = new Date(a.created_on);
                       var dateB = new Date(b.created_on);
@@ -253,8 +243,6 @@ function Header({ page }) {
                 }
               });
             } else {
-              console.log("works with pictures");
-              console.log(title, description, price, photos, token);
               postAdWithPhoto({
                 title: title,
                 description: description,
@@ -263,7 +251,6 @@ function Header({ page }) {
                 token: token,
               }).then((item) => {
                 if (item?.title !== title) {
-                  console.log("got token");
                   dispatch(setToken(item));
                   postAdWithPhoto({
                     title: title,
@@ -273,7 +260,6 @@ function Header({ page }) {
                     token: item,
                   }).then(() => {
                     getAllAds().then((ads) => {
-                      console.log("got ads");
                       function compare(a, b) {
                         var dateA = new Date(a.created_on);
                         var dateB = new Date(b.created_on);
@@ -287,9 +273,7 @@ function Header({ page }) {
                     });
                   });
                 } else {
-                  console.log("works normally with pictures");
                   getAllAds().then((ads) => {
-                    console.log("got ads");
                     function compare(a, b) {
                       var dateA = new Date(a.created_on);
                       var dateB = new Date(b.created_on);

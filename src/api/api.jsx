@@ -97,6 +97,7 @@ async function updateToken({ access, refresh }) {
     throw new Error("Ошибка сервера");
   }
 }
+
 export async function updateUserData(
   email,
   name,
@@ -141,7 +142,41 @@ export async function updateUserData(
   }
 }
 
+export async function updatePhotoAd({ photo, id, token }) {
+  console.log({ photo, id, token });
+  const data = new FormData();
+  data.append("file", photo);
+  const response = await fetch(`${baseURL}/ads/${id}/image`, {
+    method: "POST",
+    headers: {
+      Authorization: `Bearer ${token.access_token}`,
+    },
+    body: data,
+  });
+
+  if (response.status === 500) {
+    throw new Error("Сервер не отвечает");
+  }
+
+  if (response.status === 200) {
+    const result = await response.json();
+    return result;
+  }
+
+  if (response.status === 401) {
+    const newToken = await updateToken({
+      access: token.access_token,
+      refresh: token.refresh_token,
+    });
+    return newToken;
+  }
+
+  const result = await response.json();
+  return result;
+}
+
 export async function postAvatar({ avatar, token }) {
+  console.log(avatar);
   const data = new FormData();
   data.append("file", avatar);
   const response = await fetch(`${baseURL}/user/avatar`, {

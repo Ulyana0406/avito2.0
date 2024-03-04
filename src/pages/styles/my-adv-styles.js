@@ -304,6 +304,7 @@ export const ModalAddPhotosBar = styled.div`
   overflow: hidden;
 `;
 export const ModalAddPhotos = styled.div`
+  position: relative;
   width: 500px;
   display: -webkit-box;
   display: -ms-flexbox;
@@ -328,14 +329,15 @@ export const ModalAddForm = styled.div`
   position: relative;
   z-index: 0;
 `;
-export const ModalAddPhotoCover = styled.div`
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  top: 0;
-  left: 0;
-  background-color: #f0f0f0;
-  z-index: -1;
+export const ModalAddPhotoCover = styled.input`
+  // position: absolute;
+  // width: 100%;
+  // height: 100%;
+  // top: 0;
+  // left: 0;
+  // background-color: #f0f0f0;
+  // z-index: 1000;
+  display: none;
 `;
 export const ModalBlockPrice = styled.div`
   width: 100%;

@@ -16,10 +16,18 @@ import * as S from "./styles/my-adv-styles";
 import Header from "../components/Header/Header";
 import MainMenu from "../components/MainMenu/MainMenu";
 import { useDispatch, useSelector } from "react-redux";
-import { deleteAd, getAd, getAllAds, getComments, updateAd } from "../api/api";
+import {
+  deleteAd,
+  getAd,
+  getAllAds,
+  getComments,
+  updateAd,
+  updatePhotoAd,
+} from "../api/api";
 import { useNavigate } from "react-router-dom";
 import { dateFormat, priceFormat, sellsFrom } from "../usefulFunctions";
 import { setAllAds } from "../store/slices/adSlice";
+import { setToken, setUser } from "../store/slices/userSlice";
 
 export const MyAdvertisement = () => {
   const [modalIsOpenEdit, setModalIsOpenEdit] = useState(false);
@@ -33,11 +41,11 @@ export const MyAdvertisement = () => {
   const [active, setActive] = useState(0);
   const [comments, setComments] = useState([]);
   const [swiper, setSwiper] = useState(null);
-  //const [photos, setPhotos] = useState([]);
+  const [photos, setPhotos] = useState([]);
+
   const dispatch = useDispatch();
   //const [comments, setComments] = useState([]);
   const navigate = useNavigate();
-  console.log(ad);
   useEffect(() => {
     getAd(JSON.parse(localStorage.getItem("postId"))).then((post) => {
       setAd(post);
@@ -61,6 +69,41 @@ export const MyAdvertisement = () => {
 
   const closeModalReview = () => {
     setModalIsOpenReview(false);
+  };
+
+  const updateStatePhoto = (index) => {
+    const newAd = ad;
+    const photos = ad.images;
+    photos.splice(index, 1);
+    newAd.images = photos;
+    setAd(newAd);
+  };
+
+  const updatePhoto = (event) => {
+    event.preventDefault();
+    console.log(event.target.files[0]);
+    if (event.target.files[0]) {
+      updatePhotoAd({
+        photo: event.target.files[0],
+        id: ad.id,
+        token: token,
+      }).then((item) => {
+        if (item?.id !== JSON.parse(localStorage.getItem("authData")).id) {
+          console.log("вызываем снова");
+          dispatch(setToken(item));
+          updatePhotoAd({
+            photo: event.target.files[0],
+            id: ad.id,
+            token: item,
+          }).then((newItem) => {
+            dispatch(setUser(newItem));
+          });
+        } else {
+          localStorage.setItem("authData", JSON.stringify(item));
+          dispatch(setUser(item));
+        }
+      });
+    }
   };
 
   const modalContentEdit = (
@@ -101,78 +144,138 @@ export const MyAdvertisement = () => {
         <S.ModalAddPhotosBar>
           <S.ModalAddPhotos>
             {ad?.images[0] !== undefined ? (
-              <img
-                src={`http://localhost:8090/${ad.images[0].url}`}
-                style={{
-                  width: "90px",
-                  height: "90px",
-                }}
-              />
+              <label for="addPhoto0">
+                <img
+                  src={`http://localhost:8090/${ad.images[0].url}`}
+                  style={{
+                    width: "90px",
+                    height: "90px",
+                  }}
+                />
+              </label>
             ) : (
-              <img src="/img/add_photo.png" alt="add_photo" />
+              <label for="addPhoto0">
+                <img src="/img/add_photo.png" alt="add_photo" />
+              </label>
             )}
 
-            <S.ModalAddPhotoCover></S.ModalAddPhotoCover>
+            <S.ModalAddPhotoCover
+              onChange={(event) => {
+                updateStatePhoto(0);
+                updatePhoto(event);
+              }}
+              id="addPhoto0"
+              type="file"
+              accept="image/*"
+            ></S.ModalAddPhotoCover>
           </S.ModalAddPhotos>
           <S.ModalAddPhotos>
             {ad?.images[1] !== undefined ? (
-              <img
-                src={`http://localhost:8090/${ad.images[1].url}`}
-                style={{
-                  width: "90px",
-                  height: "90px",
-                }}
-              />
+              <label for="addPhoto1">
+                <img
+                  src={`http://localhost:8090/${ad.images[1].url}`}
+                  style={{
+                    width: "90px",
+                    height: "90px",
+                  }}
+                />
+              </label>
             ) : (
-              <img src="/img/add_photo.png" alt="add_photo" />
+              <label for="addPhoto1">
+                <img src="/img/add_photo.png" alt="add_photo" />
+              </label>
             )}
 
-            <S.ModalAddPhotoCover></S.ModalAddPhotoCover>
+            <S.ModalAddPhotoCover
+              onChange={(event) => {
+                updateStatePhoto(1);
+                updatePhoto(event);
+              }}
+              id="addPhoto1"
+              type="file"
+              accept="image/*"
+            ></S.ModalAddPhotoCover>
           </S.ModalAddPhotos>
           <S.ModalAddPhotos>
             {ad?.images[2] !== undefined ? (
-              <img
-                src={`http://localhost:8090/${ad.images[2].url}`}
-                style={{
-                  width: "90px",
-                  height: "90px",
-                }}
-              />
+              <label for="addPhoto2">
+                <img
+                  src={`http://localhost:8090/${ad.images[2].url}`}
+                  style={{
+                    width: "90px",
+                    height: "90px",
+                  }}
+                />
+              </label>
             ) : (
-              <img src="/img/add_photo.png" alt="add_photo" />
+              <label for="addPhoto2">
+                <img src="/img/add_photo.png" alt="add_photo" />
+              </label>
             )}
 
-            <S.ModalAddPhotoCover></S.ModalAddPhotoCover>
+            <S.ModalAddPhotoCover
+              onChange={(event) => {
+                updateStatePhoto(2);
+                updatePhoto(event);
+              }}
+              id="addPhoto2"
+              type="file"
+              accept="image/*"
+            ></S.ModalAddPhotoCover>
           </S.ModalAddPhotos>
           <S.ModalAddPhotos>
             {ad?.images[3] !== undefined ? (
-              <img
-                src={`http://localhost:8090/${ad.images[3].url}`}
-                style={{
-                  width: "90px",
-                  height: "90px",
-                }}
-              />
+              <label for="addPhoto3">
+                <img
+                  src={`http://localhost:8090/${ad.images[3].url}`}
+                  style={{
+                    width: "90px",
+                    height: "90px",
+                  }}
+                />
+              </label>
             ) : (
-              <img src="/img/add_photo.png" alt="add_photo" />
+              <label for="addPhoto3">
+                <img src="/img/add_photo.png" alt="add_photo" />
+              </label>
             )}
 
-            <S.ModalAddPhotoCover></S.ModalAddPhotoCover>
+            <S.ModalAddPhotoCover
+              onChange={(event) => {
+                updateStatePhoto(3);
+                updatePhoto(event);
+              }}
+              id="addPhoto3"
+              type="file"
+              accept="image/*"
+            ></S.ModalAddPhotoCover>
           </S.ModalAddPhotos>
           <S.ModalAddPhotos>
             {ad?.images[4] !== undefined ? (
-              <img
-                src={`http://localhost:8090/${ad.images[4].url}`}
-                style={{
-                  width: "90px",
-                  height: "90px",
-                }}
-              />
+              <label for="addPhoto4">
+                <img
+                  src={`http://localhost:8090/${ad.images[4].url}`}
+                  style={{
+                    width: "90px",
+                    height: "90px",
+                  }}
+                />
+              </label>
             ) : (
-              <img src="/img/add_photo.png" alt="add_photo" />
+              <label for="addPhoto4">
+                <img src="/img/add_photo.png" alt="add_photo" />
+              </label>
             )}
 
-            <S.ModalAddPhotoCover></S.ModalAddPhotoCover>
+            <S.ModalAddPhotoCover
+              onChange={(event) => {
+                updateStatePhoto(4);
+                updatePhoto(event);
+              }}
+              id="addPhoto4"
+              type="file"
+              accept="image/*"
+            ></S.ModalAddPhotoCover>
           </S.ModalAddPhotos>
         </S.ModalAddPhotosBar>
       </S.ModalPhotos>
@@ -316,7 +419,6 @@ export const MyAdvertisement = () => {
                       {ad?.images.length > 0 ? (
                         <S.ArticImgBarDiv
                           onClick={() => {
-                            console.log(swiper);
                             swiper.slideTo(0);
                             setActive(0);
                           }}

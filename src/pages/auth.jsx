@@ -54,7 +54,6 @@ export function Authorization() {
         navigate("/");
       })
       .catch((item) => {
-        console.log(item);
         setError(item.message);
       })
       .finally(() => {
@@ -88,7 +87,6 @@ export function Authorization() {
     }
     signUp({ email, password, name, surname, city })
       .then((user) => {
-        console.log(user);
         dispatch(setUser(user));
         navigate("/register");
         setIsLoginMode(true);

@@ -31,7 +31,6 @@ export const Advertisement = () => {
   useEffect(() => {
     getAd(JSON.parse(localStorage.getItem("postId"))).then((post) => {
       setAd(post);
-      console.log(ad);
     });
   }, []);
   //Отзывы
@@ -189,7 +188,6 @@ export const Advertisement = () => {
                       {ad?.images.length > 0 ? (
                         <S.ArticImgBarDiv
                           onClick={() => {
-                            console.log(swiper);
                             swiper.slideTo(0);
                             setActive(0);
                           }}
