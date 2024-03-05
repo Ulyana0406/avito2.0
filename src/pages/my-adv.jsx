@@ -18,6 +18,7 @@ import MainMenu from "../components/MainMenu/MainMenu";
 import { useDispatch, useSelector } from "react-redux";
 import {
   deleteAd,
+  deletePhotoAd,
   getAd,
   getAllAds,
   getComments,
@@ -47,6 +48,7 @@ export const MyAdvertisement = () => {
   //const [comments, setComments] = useState([]);
   const navigate = useNavigate();
   useEffect(() => {
+    console.log("Срабатывает ли после обновления и удаления фото");
     getAd(JSON.parse(localStorage.getItem("postId"))).then((post) => {
       setAd(post);
     });
@@ -88,22 +90,40 @@ export const MyAdvertisement = () => {
         id: ad.id,
         token: token,
       }).then((item) => {
-        if (item?.id !== JSON.parse(localStorage.getItem("authData")).id) {
+        console.log(item);
+        if (item.id !== ad.id) {
           console.log("вызываем снова");
           dispatch(setToken(item));
           updatePhotoAd({
             photo: event.target.files[0],
             id: ad.id,
             token: item,
-          }).then((newItem) => {
-            dispatch(setUser(newItem));
-          });
+          }).then(window.location.reload());
         } else {
-          localStorage.setItem("authData", JSON.stringify(item));
-          dispatch(setUser(item));
+          window.location.reload();
         }
       });
     }
+  };
+
+  const deletePhoto = (index) => {
+    deletePhotoAd({
+      id: ad.id,
+      file_url: ad.images[index].url,
+      token: token,
+    }).then((item) => {
+      if (item?.id !== ad.id) {
+        console.log("второй вызов на удалении");
+        dispatch(setToken(item));
+        deletePhotoAd({
+          id: ad.id,
+          file_url: ad.images[index].url,
+          token: item,
+        }).then(window.location.reload());
+      } else {
+        window.location.reload();
+      }
+    });
   };
 
   const modalContentEdit = (
@@ -152,6 +172,30 @@ export const MyAdvertisement = () => {
                     height: "90px",
                   }}
                 />
+                <div
+                  style={{
+                    position: "absolute",
+                    width: "43px",
+                    height: "43px",
+                    top: "0",
+                    right: "0",
+                    zIndex: 1000,
+                  }}
+                >
+                  <img
+                    style={{
+                      position: "absolute",
+                      width: "43px",
+                      heigth: "43px",
+                      top: "0",
+                      right: "7px",
+                    }}
+                    src="/img/close_modal.png"
+                    onClick={() => {
+                      deletePhoto(0);
+                    }}
+                  />
+                </div>
               </label>
             ) : (
               <label for="addPhoto0">
@@ -161,7 +205,7 @@ export const MyAdvertisement = () => {
 
             <S.ModalAddPhotoCover
               onChange={(event) => {
-                updateStatePhoto(0);
+                // updateStatePhoto(0);
                 updatePhoto(event);
               }}
               id="addPhoto0"
@@ -179,6 +223,19 @@ export const MyAdvertisement = () => {
                     height: "90px",
                   }}
                 />
+                <img
+                  style={{
+                    position: "absolute",
+                    width: "43px",
+                    heigth: "43px",
+                    top: "0",
+                    right: "7px",
+                  }}
+                  src="/img/close_modal.png"
+                  onClick={() => {
+                    deletePhoto(1);
+                  }}
+                />
               </label>
             ) : (
               <label for="addPhoto1">
@@ -188,7 +245,7 @@ export const MyAdvertisement = () => {
 
             <S.ModalAddPhotoCover
               onChange={(event) => {
-                updateStatePhoto(1);
+                // updateStatePhoto(1);
                 updatePhoto(event);
               }}
               id="addPhoto1"
@@ -206,6 +263,19 @@ export const MyAdvertisement = () => {
                     height: "90px",
                   }}
                 />
+                <img
+                  style={{
+                    position: "absolute",
+                    width: "43px",
+                    heigth: "43px",
+                    top: "0",
+                    right: "7px",
+                  }}
+                  src="/img/close_modal.png"
+                  onClick={() => {
+                    deletePhoto(2);
+                  }}
+                />
               </label>
             ) : (
               <label for="addPhoto2">
@@ -215,7 +285,7 @@ export const MyAdvertisement = () => {
 
             <S.ModalAddPhotoCover
               onChange={(event) => {
-                updateStatePhoto(2);
+                // updateStatePhoto(2);
                 updatePhoto(event);
               }}
               id="addPhoto2"
@@ -233,6 +303,19 @@ export const MyAdvertisement = () => {
                     height: "90px",
                   }}
                 />
+                <img
+                  style={{
+                    position: "absolute",
+                    width: "43px",
+                    heigth: "43px",
+                    top: "0",
+                    right: "7px",
+                  }}
+                  src="/img/close_modal.png"
+                  onClick={() => {
+                    deletePhoto(3);
+                  }}
+                />
               </label>
             ) : (
               <label for="addPhoto3">
@@ -242,7 +325,7 @@ export const MyAdvertisement = () => {
 
             <S.ModalAddPhotoCover
               onChange={(event) => {
-                updateStatePhoto(3);
+                // updateStatePhoto(3);
                 updatePhoto(event);
               }}
               id="addPhoto3"
@@ -260,6 +343,19 @@ export const MyAdvertisement = () => {
                     height: "90px",
                   }}
                 />
+                <img
+                  style={{
+                    position: "absolute",
+                    width: "43px",
+                    heigth: "43px",
+                    top: "0",
+                    right: "7px",
+                  }}
+                  src="/img/close_modal.png"
+                  onClick={() => {
+                    deletePhoto(4);
+                  }}
+                />
               </label>
             ) : (
               <label for="addPhoto4">
@@ -269,7 +365,7 @@ export const MyAdvertisement = () => {
 
             <S.ModalAddPhotoCover
               onChange={(event) => {
-                updateStatePhoto(4);
+                // updateStatePhoto(4);
                 updatePhoto(event);
               }}
               id="addPhoto4"
@@ -493,7 +589,10 @@ export const MyAdvertisement = () => {
                     href="#"
                     onClick={() => {
                       openModalReview();
-                      getComments({ id: ad.id, token }).then((response) => {
+                      getComments({
+                        id: ad.id,
+                        token,
+                      }).then((response) => {
                         setComments(response);
                       });
                     }}
@@ -545,10 +644,16 @@ export const MyAdvertisement = () => {
                   </Modal>
                   <S.BtnRemove
                     onClick={() =>
-                      deleteAd({ id: ad.id, token: token }).then((item) => {
+                      deleteAd({
+                        id: ad.id,
+                        token: token,
+                      }).then((item) => {
                         if (item?.access_token) {
                           console.log("update token");
-                          deleteAd({ id: ad.id, token: item }).then(() => {
+                          deleteAd({
+                            id: ad.id,
+                            token: item,
+                          }).then(() => {
                             getAllAds().then((ads) => {
                               dispatch(setAllAds(ads));
                               navigate(`/`);

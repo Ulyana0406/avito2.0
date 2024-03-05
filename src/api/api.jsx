@@ -205,6 +205,38 @@ export async function postAvatar({ avatar, token }) {
   const result = await response.json();
   return result;
 }
+
+export async function deletePhotoAd({ id, file_url, token }) {
+  const response = await fetch(
+    `${baseURL}/ads/${id}/image?file_url=${file_url}`,
+    {
+      method: "DELETE",
+      headers: {
+        Authorization: `Bearer ${token.access_token}`,
+        "content-type": "application/json",
+      },
+    }
+  );
+  if (response.status === 500) {
+    throw new Error("Сервер не отвечает");
+  }
+  if (response.status === 200) {
+    const result = await response.json();
+    return result;
+  }
+  if (response.status === 401) {
+    console.log(token.access_token, token.refresh_token);
+    const newToken = await updateToken({
+      access: token.access_token,
+      refresh: token.refresh_token,
+    });
+    console.log(newToken);
+    return newToken;
+  }
+  const result = await response.json();
+  return result;
+}
+
 export async function postAdWithPhoto({
   title,
   description,

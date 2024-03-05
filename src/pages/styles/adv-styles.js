@@ -206,6 +206,7 @@ export const MainContainerBlock = styled.div`
   padding: 0px 5px;
 `;
 export const MainTitle = styled.h3`
+  margin-top: 114px;
   margin-bottom: 32px;
   padding: 0 5px;
   font-size: 32px;
